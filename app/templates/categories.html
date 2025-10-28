@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kategoriyalar va mahsulotlar</title>
+</head>
+<body>
+    <h1>Kategoriyalar</h1>
+    <ul>
+        {% for cat in categories %}
+            <li>
+                <a href="{% url 'category_products' cat.category_id %}">
+                    {{ cat.category_name }}
+                </a>
+            </li>
+        {% empty %}
+            <li>Kategoriyalar yo‘q</li>
+        {% endfor %}
+    </ul>
+
+    {% if category %}
+        <hr>
+        <h2>{{ category.category_name }} dagi mahsulotlar</h2>
+        <ul>
+            {% for product in products %}
+                <li>
+                    {{ product.product_name }} — {{ product.unit_price }} so‘m
+                    {% if product.photo %}
+                        <br>
+                        <img src="{{ product.photo.url }}" width="100">
+                    {% endif %}
+                </li>
+            {% empty %}
+                <li>Bu kategoriyada mahsulot yo‘q.</li>
+            {% endfor %}
+        </ul>
+        <p><a href="{% url 'category_list' %}">⬅ Barcha kategoriyalar</a></p>
+    {% endif %}
+</body>
+</html>
